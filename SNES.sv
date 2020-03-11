@@ -302,14 +302,14 @@ wire [64:0] RTC;
 
 wire [21:0] gamma_bus;
 
-wire [11:0] joy0 = joydb_1ena ? {joydb_1[10],joydb_1[11],joydb_1[5:0]} : joy0_USB;
-wire [11:0] joy1 = joydb_2ena ? {joydb_2[10],joydb_2[11],joydb_2[5:0]} : joydb_1ena ? joy0_USB : joy1_USB;
+wire [11:0] joy0 = joydb_1ena ? {joydb_1[10],joydb_1[11],joydb_1[9:6],joydb_1[4],joydb_1[5],joydb_2[3:0]} : joy0_USB;
+wire [11:0] joy1 = joydb_2ena ? {joydb_2[10],joydb_2[11],joydb_2[9:6],joydb_2[4],joydb_2[5],joydb_2[3:0]} : joydb_1ena ? joy0_USB : joy1_USB;
 wire [11:0] joy2 = joydb_2ena ? joy0_USB : joydb_1ena ? joy1_USB : joy2_USB;
 wire [11:0] joy3 = joydb_2ena ? joy1_USB : joydb_1ena ? joy2_USB : joy3_USB;
 wire [11:0] joy4 = joydb_2ena ? joy2_USB : joydb_1ena ? joy3_USB : joy4_USB;
 
-wire [15:0] joydb_1 = JOY_FLAG[2] ? {JOYDB9MD_1[11],JOYDB9MD_1[10] | (JOYDB9MD_1[11] & JOYDB9MD_1[5]),JOYDB9MD_1[9:6],JOYDB9MD_1[4],JOYDB9MD_1[5],JOYDB9MD_1[3:0]} : JOY_FLAG[1] ? JOYDB15_1 : '0;
-wire [15:0] joydb_2 = JOY_FLAG[2] ? {JOYDB9MD_2[11],JOYDB9MD_2[10] | (JOYDB9MD_2[11] & JOYDB9MD_2[5]),JOYDB9MD_2[9:6],JOYDB9MD_2[4],JOYDB9MD_2[5],JOYDB9MD_2[3:0]} : JOY_FLAG[1] ? JOYDB15_2 : '0;
+wire [15:0] joydb_1 = JOY_FLAG[2] ? {JOYDB9MD_1[11],JOYDB9MD_1[10] | (JOYDB9MD_1[11] & JOYDB9MD_1[5]),JOYDB9MD_1[9:0]} : JOY_FLAG[1] ? JOYDB15_1 : '0;
+wire [15:0] joydb_2 = JOY_FLAG[2] ? {JOYDB9MD_2[11],JOYDB9MD_2[10] | (JOYDB9MD_2[11] & JOYDB9MD_2[5]),JOYDB9MD_2[9:0]} : JOY_FLAG[1] ? JOYDB15_2 : '0;
 wire        joydb_1ena = |JOY_FLAG[2:1]               & ~OSD_STATUS;
 wire        joydb_2ena = |JOY_FLAG[2:1] & JOY_FLAG[0] & ~OSD_STATUS;
 
