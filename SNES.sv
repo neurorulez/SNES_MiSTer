@@ -118,8 +118,8 @@ module emu
 	// Set USER_OUT to 1 to read from USER_IN.
 	output        USER_OSD,	
 	output  [1:0] USER_MODE,	
-	input   [6:0] USER_IN,
-	output  [6:0] USER_OUT,
+	input   [7:0] USER_IN,
+	output  [7:0] USER_OUT,
 
 	input         OSD_STATUS
 );
@@ -302,8 +302,9 @@ wire [64:0] RTC;
 
 wire [21:0] gamma_bus;
 
-wire [11:0] joy1 = joydb_1ena ? {joydb_1[10],joydb_1[11],joydb_1[5:0]} : joy1_USB;
-wire [11:0] joy2 = joydb_2ena ? {joydb_2[10],joydb_2[11],joydb_2[5:0]} : joydb_1ena ? joy1_USB : joy2_USB;
+wire [11:0] joy0 = joydb_1ena ? {joydb_1[10],joydb_1[11],joydb_1[5:0]} : joy0_USB;
+wire [11:0] joy1 = joydb_2ena ? {joydb_2[10],joydb_2[11],joydb_2[5:0]} : joydb_1ena ? joy0_USB : joy1_USB;
+wire [11:0] joy2 = joydb_2ena ? joy0_USB : joydb_1ena ? joy1_USB : joy2_USB;
 wire [11:0] joy3 = joydb_2ena ? joy1_USB : joydb_1ena ? joy2_USB : joy3_USB;
 wire [11:0] joy4 = joydb_2ena ? joy2_USB : joydb_1ena ? joy3_USB : joy4_USB;
 
